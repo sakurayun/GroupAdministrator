@@ -10,37 +10,33 @@ import net.mamoe.mirai.message.data.MessageUtils;
 import javax.naming.ldap.Control;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class GroupMessageListener implements Consumer <GroupMessage> {
     @Override
     public void accept(GroupMessage event) {
-        /*if(event.getMessage().toString().contains("²âÊÔ")) {
-            try {
-                Image img = event.getGroup().uploadImage(new URL(event.getSender().getAvatarUrl()));
-                event.getGroup().sendMessage(MessageUtils.newChain(img)
-                .plus("ÕâÊÇÒ»¸ö²âÊÔà»")
-                .plus(new At(event.getSender())));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }*/
         //System.out.println(event.getGroup().getBotPermission().getLevel());//1=Administrator,0=Member
         if(event.getGroup().getBotPermission().getLevel()==0||event.getSender().getPermission().getLevel()>0) {
             //System.out.println("Permission denied!");
             return;
         }
         String msg = event.getMessage().toString();
-        if(msg.toLowerCase().contains("ddos")||msg.contains("Éµ±Æ")||msg.contains("·­Ç½")||
-                msg.toLowerCase().contains("vpn")||msg.contains("Ï°½üÆ½")||msg.toLowerCase().contains("ssr")||
-                msg.toLowerCase().contains("v2ray")||msg.contains("Éç¹¤")||msg.contains("ÈËÈâ")||
-                msg.contains("Ìİ×Ó")||msg.contains("ÄÔÌ±")||msg.contains("ÄãÂè")) {
-            event.getBot().recall(event.getMessage());
-            int time = 600;
-            event.getSender().muteAsync(time);
-            event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender()))
-                    .plus("ÄãÊ¹ÓÃÁËÎ¥½û´Ê£¬ÄãÒò´Ë±»½ûÑÔ"+time+"Ãë£¬Çë×¢Òâ×Ô¼ºµÄÑÔĞĞ£¡")
-            );
-         }
+        List<String> list = new ArrayList<>();
+        Collections.addAll(list,"ddos","å‚»é€¼","ç¿»å¢™","vpn",
+                "ä¹ è¿‘å¹³","ssr","v2ray","ç¤¾å·¥","äººè‚‰","æ¢¯å­","è„‘ç˜«","ä½ å¦ˆ");
+        for(int a=0;a<list.size();) {
+            a++;
+            if(event.getMessage().toString().toLowerCase().contains(list.get(a))) {
+                event.getBot().recall(event.getMessage());
+                int time = 600;
+                event.getSender().muteAsync(time);
+                event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender()))
+                        .plus(" ä½ ä½¿ç”¨äº†è¿ç¦è¯ï¼Œä½ å› æ­¤è¢«ç¦è¨€"+time+"ç§’ï¼Œè¯·æ³¨æ„è‡ªå·±çš„è¨€è¡Œï¼"));
+                return;
+            }
+        }
     }
 }

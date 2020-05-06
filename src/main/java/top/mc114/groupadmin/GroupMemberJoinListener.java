@@ -17,7 +17,7 @@ public class GroupMemberJoinListener implements Consumer <MemberJoinEvent> {
             Image img = event.getGroup().uploadImage(new URL(event.getMember().getAvatarUrl()));
             event.getGroup().sendMessage(MessageUtils.newChain(img)
                     .plus(new At(event.getMember()))
-                    .plus("["+event.getMember().getId()+"]¼ÓÈëÁË±¾Èº¡£")
+                    .plus("["+event.getMember().getId()+"]åŠ å…¥äº†æœ¬ç¾¤ã€‚")
             );
         } catch (MalformedURLException e) {
             e.printStackTrace();

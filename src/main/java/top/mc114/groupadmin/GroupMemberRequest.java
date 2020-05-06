@@ -12,7 +12,7 @@ public class GroupMemberRequest implements Consumer <MemberJoinRequestEvent> {
         String msg = event.getMessage().toLowerCase();
         if(msg.contains("bedrockx")||msg.contains("bdx")) {
             event.accept();
-            event.getGroup().sendMessage(event.getFromNick()+"["+event.getFromId()+"]¾­¹ıBotµÄÉóºË¼ÓÈëÁË±¾Èº¡£");
+            event.getGroup().sendMessage(event.getFromNick()+"["+event.getFromId()+"]ç»è¿‡Botçš„å®¡æ ¸åŠ å…¥äº†æœ¬ç¾¤ã€‚");
         }
     }
 }

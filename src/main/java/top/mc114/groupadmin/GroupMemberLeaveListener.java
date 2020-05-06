@@ -17,7 +17,7 @@ public class GroupMemberLeaveListener implements Consumer <MemberLeaveEvent> {
             Image img = event.getGroup().uploadImage(new URL(event.getMember().getAvatarUrl()));
             event.getGroup().sendMessage(MessageUtils.newChain(img)
                     .plus(new At(event.getMember()))
-                    .plus("["+event.getMember().getId()+"]Àë¿ªÁË±¾Èº¡£")
+                    .plus("["+event.getMember().getId()+"]ç¦»å¼€äº†æœ¬ç¾¤ã€‚")
             );
         } catch (MalformedURLException e) {
             e.printStackTrace();
