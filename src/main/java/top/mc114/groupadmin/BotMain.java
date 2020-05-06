@@ -8,11 +8,11 @@ import net.mamoe.mirai.message.GroupMessage;
 
 class BotMain extends PluginBase {
     public void onLoad() {
-        getLogger().info("Plugin loaded!");
+        getLogger().info("GroupAdministrator plugin loaded!");
     }
 
     public void onEnable() {
-        getLogger().info("Plugin enabled!");
+        getLogger().info("GroupAdministrator plugin enabled! Version:0.1.1");
         this.getEventListener().subscribeAlways(GroupMessage.class, new GroupMessageListener());
         this.getEventListener().subscribeAlways(MemberJoinEvent.class, new GroupMemberJoinListener());
         this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GroupMemberLeaveListener());
