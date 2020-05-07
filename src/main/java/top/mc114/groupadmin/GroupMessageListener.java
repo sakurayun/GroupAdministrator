@@ -27,14 +27,13 @@ public class GroupMessageListener implements Consumer <GroupMessage> {
         List<String> list = new ArrayList<>();
         Collections.addAll(list,"ddos","傻逼","翻墙","vpn",
                 "习近平","ssr","v2ray","社工","人肉","梯子","脑瘫","你妈");
-        for(int a=0;a<list.size();) {
-            a++;
+        for(int a=0;a<list.size();a++) {
             if(event.getMessage().toString().toLowerCase().contains(list.get(a))) {
                 event.getBot().recall(event.getMessage());
                 int time = 600;
                 event.getSender().muteAsync(time);
                 event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender()))
-                        .plus(" 你使用了违禁词，你因此被禁言"+time+"秒，请注意自己的言行！"));
+                        .plus("你使用了违禁词，你因此被禁言"+time+"秒，请注意自己的言行！"));
                 return;
             }
         }
