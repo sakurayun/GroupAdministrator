@@ -12,11 +12,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class BotMain extends PluginBase {
-    public static List<String> list = new ArrayList<>();
-
+    public static List<String> key_list;
+    public static List<String> accept_list;
+    public static Config config;
     public void onLoad() {
-        Collections.addAll(list,"ddos","傻逼","翻墙","vpn",
-                "习近平","ssr","v2ray","社工","人肉","梯子","脑瘫","你妈");
+        config = loadConfig("config.yml");//加载config
+
+        List<String> keyword_list = new ArrayList<>();//新建一个临时list
+        Collections.addAll(keyword_list,"ddos","傻逼","翻墙","vpn",
+                "ssr","v2ray","社工","人肉","梯子","脑瘫","你妈");
+        config.setIfAbsent("key_words", keyword_list);//如果config不存在，则将临时list内容导入config
+
+        List<String> acceptword_list = new ArrayList<>();
+        Collections.addAll(acceptword_list, "bdx", "bedrockx");
+        config.setIfAbsent("accept_words", acceptword_list);
+
+        config.save();
+        acceptword_list.clear();
+        keyword_list.clear();//删除defaultlist中的所有元素
+        key_list = config.getStringList("key_words");
+        accept_list = config.getStringList("accept_words");
     }
 
     public void onEnable() {

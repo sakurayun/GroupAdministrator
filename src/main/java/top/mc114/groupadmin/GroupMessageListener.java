@@ -5,7 +5,6 @@ import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -19,7 +18,7 @@ public class GroupMessageListener implements Consumer <GroupMessage> {
             return;
         }
         String msg = event.getMessage().toString();
-        list = BotMain.list;
+        list = BotMain.key_list;
         //double st = System.currentTimeMillis();
         for(int a=0;a<list.size();a++) {
             if(event.getMessage().toString().toLowerCase().contains(list.get(a))) {
