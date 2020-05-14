@@ -1,11 +1,14 @@
 package top.mc114.groupadmin;
 
+import net.mamoe.mirai.console.command.BlockingCommand;
+import net.mamoe.mirai.console.command.CommandSender;
+import net.mamoe.mirai.console.command.JCommandManager;
 import net.mamoe.mirai.console.plugins.Config;
 import net.mamoe.mirai.console.plugins.PluginBase;
-import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
 import net.mamoe.mirai.event.events.MemberLeaveEvent;
 import net.mamoe.mirai.message.GroupMessage;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,8 +39,19 @@ public class BotMain extends PluginBase {
 
     public void onEnable() {
         this.getEventListener().subscribeAlways(GroupMessage.class, new GroupMessageListener());
-        this.getEventListener().subscribeAlways(MemberJoinEvent.class, new GroupMemberJoinListener());
         this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GroupMemberLeaveListener());
         this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GroupMemberRequest());
+        JCommandManager.getInstance().register(this, new BlockingCommand(
+                "gareload", new ArrayList<>(),"重载GA配置文件","/gareload"
+        ) {
+            @Override
+            public boolean onCommandBlocking(@NotNull CommandSender commandSender, @NotNull List<String> list) {
+                config = loadConfig("config.yml");
+                key_list = config.getStringList("key_words");
+                accept_list = config.getStringList("accept_words");
+                commandSender.sendMessageBlocking("重载成功");
+                return true;
+            }
+        });
     }
 }
