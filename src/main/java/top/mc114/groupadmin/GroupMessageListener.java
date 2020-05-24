@@ -21,8 +21,6 @@ public class GroupMessageListener implements Consumer <GroupMessage> {
                 event.getBot().recall(event.getMessage());
                 int time = 600;
                 event.getSender().muteAsync(time);
-                event.getGroup().sendMessage(MessageUtils.newChain(new At(event.getSender()))
-                        .plus("你使用了违禁词，你因此被禁言"+time+"秒，请注意自己的言行！"));
                 return;
             }
         }

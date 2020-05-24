@@ -17,6 +17,8 @@ import java.util.List;
 public class BotMain extends PluginBase {
     public static List<String> key_list;
     public static List<String> accept_list;
+    public static boolean onLeaveMsg;
+    public static boolean onAuditRequests;
     public static Config config;
     public void onLoad() {
         config = loadConfig("config.yml");//加载config
@@ -29,18 +31,25 @@ public class BotMain extends PluginBase {
         List<String> acceptword_list = new ArrayList<>();
         Collections.addAll(acceptword_list, "bdx", "bedrockx");
         config.setIfAbsent("accept_words", acceptword_list);
-
+        config.setIfAbsent("EnableLeaveMessage", false);
+        config.setIfAbsent("EnableAuditRequests", false);
         config.save();
         acceptword_list.clear();
         keyword_list.clear();//删除defaultlist中的所有元素
+        onLeaveMsg = config.getBoolean("EnableLeaveMessage");
+        onAuditRequests = config.getBoolean("EnableAuditRequests");
         key_list = config.getStringList("key_words");
         accept_list = config.getStringList("accept_words");
     }
 
     public void onEnable() {
         this.getEventListener().subscribeAlways(GroupMessage.class, new GroupMessageListener());
-        this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GroupMemberLeaveListener());
-        this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GroupMemberRequest());
+        if(onLeaveMsg) {
+            this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GroupMemberLeaveListener());
+        }
+        if(onLeaveMsg) {
+            this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GroupMemberRequest());
+        }
         JCommandManager.getInstance().register(this, new BlockingCommand(
                 "gareload", new ArrayList<>(),"重载GA配置文件","/gareload"
         ) {
