@@ -15,14 +15,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class BotMain extends PluginBase {
+    Config config;
     public static List<String> key_list;
     public static List<String> accept_list;
     public static boolean onLeaveMsg;
     public static boolean onAuditRequests;
-    public static Config config;
-    public void onLoad() {
-        config = loadConfig("config.yml");//加载config
-
+    public void StartLoadConfig() {
+        config = loadConfig("config.yml");
         List<String> keyword_list = new ArrayList<>();//新建一个临时list
         Collections.addAll(keyword_list,"ddos","傻逼","翻墙","vpn",
                 "ssr","v2ray","社工","人肉","梯子","脑瘫","你妈");
@@ -41,6 +40,9 @@ public class BotMain extends PluginBase {
         key_list = config.getStringList("key_words");
         accept_list = config.getStringList("accept_words");
     }
+    public void onLoad() {
+        StartLoadConfig();
+    }
 
     public void onEnable() {
         this.getEventListener().subscribeAlways(GroupMessage.class, new GroupMessageListener());
@@ -55,9 +57,7 @@ public class BotMain extends PluginBase {
         ) {
             @Override
             public boolean onCommandBlocking(@NotNull CommandSender commandSender, @NotNull List<String> list) {
-                config = loadConfig("config.yml");
-                key_list = config.getStringList("key_words");
-                accept_list = config.getStringList("accept_words");
+                StartLoadConfig();
                 commandSender.sendMessageBlocking("重载成功");
                 return true;
             }
