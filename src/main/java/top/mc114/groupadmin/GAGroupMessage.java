@@ -1,16 +1,15 @@
 package top.mc114.groupadmin;
 
 import net.mamoe.mirai.message.GroupMessage;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.MessageUtils;
+import net.mamoe.mirai.message.GroupMessageEvent;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-public class GroupMessageListener implements Consumer <GroupMessage> {
+public class GAGroupMessage implements Consumer <GroupMessageEvent> {
     List<String> list;
     @Override
-    public void accept(GroupMessage event) {
+    public void accept(GroupMessageEvent event) {
         //1=Administrator,0=Member
         if(event.getGroup().getBotPermission().getLevel()==0||event.getSender().getPermission().getLevel()>0) {
             return;

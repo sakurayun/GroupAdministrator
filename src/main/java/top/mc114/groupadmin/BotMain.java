@@ -7,7 +7,7 @@ import net.mamoe.mirai.console.plugins.Config;
 import net.mamoe.mirai.console.plugins.PluginBase;
 import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
 import net.mamoe.mirai.event.events.MemberLeaveEvent;
-import net.mamoe.mirai.message.GroupMessage;
+import net.mamoe.mirai.message.GroupMessageEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -23,8 +23,7 @@ public class BotMain extends PluginBase {
     public void StartLoadConfig() {
         config = loadConfig("config.yml");
         List<String> keyword_list = new ArrayList<>();//新建一个临时list
-        Collections.addAll(keyword_list,"ddos","傻逼","翻墙","vpn",
-                "ssr","v2ray","社工","人肉","梯子","脑瘫","你妈");
+        Collections.addAll(keyword_list,"傻逼","脑瘫","你妈");
         config.setIfAbsent("key_words", keyword_list);//如果config不存在，则将临时list内容导入config
 
         List<String> acceptword_list = new ArrayList<>();
@@ -45,15 +44,15 @@ public class BotMain extends PluginBase {
     }
 
     public void onEnable() {
-        this.getEventListener().subscribeAlways(GroupMessage.class, new GroupMessageListener());
+        this.getEventListener().subscribeAlways(GroupMessageEvent.class, new GAGroupMessage());
         if(onLeaveMsg) {
-            this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GroupMemberLeaveListener());
+            this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GAGroupMemberLeave());
         }
         if(onLeaveMsg) {
-            this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GroupMemberRequest());
+            this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GAGroupMemberJoinRequests());
         }
         JCommandManager.getInstance().register(this, new BlockingCommand(
-                "gareload", new ArrayList<>(),"重载GA配置文件","/gareload"
+                "gareload", new ArrayList<>(),"重载GroupAdministrator配置文件","/gareload"
         ) {
             @Override
             public boolean onCommandBlocking(@NotNull CommandSender commandSender, @NotNull List<String> list) {

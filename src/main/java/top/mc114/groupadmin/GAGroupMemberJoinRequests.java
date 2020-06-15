@@ -5,7 +5,7 @@ import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class GroupMemberRequest implements Consumer <MemberJoinRequestEvent> {
+public class GAGroupMemberJoinRequests implements Consumer <MemberJoinRequestEvent> {
     List<String> list;
     @Override
     public void accept(MemberJoinRequestEvent event) {

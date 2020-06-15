@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.function.Consumer;
 
-public class GroupMemberLeaveListener implements Consumer <MemberLeaveEvent> {
+public class GAGroupMemberLeave implements Consumer <MemberLeaveEvent> {
     @Override
     public void accept(MemberLeaveEvent event) {
         //Image img = event.getGroup().uploadImage(new URL(event.getMember().getAvatarUrl()));
