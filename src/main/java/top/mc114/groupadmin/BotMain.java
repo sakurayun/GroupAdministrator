@@ -21,19 +21,19 @@ public class BotMain extends PluginBase {
     public static boolean onLeaveMsg;
     public static boolean onAuditRequests;
     public void StartLoadConfig() {
-        config = loadConfig("config.yml");
+        config = loadConfig("config.yml");//加载config
         List<String> keyword_list = new ArrayList<>();//新建一个临时list
         Collections.addAll(keyword_list,"傻逼","脑瘫","你妈");
         config.setIfAbsent("key_words", keyword_list);//如果config不存在，则将临时list内容导入config
 
-        List<String> acceptword_list = new ArrayList<>();
-        Collections.addAll(acceptword_list, "bdx", "bedrockx");
-        config.setIfAbsent("accept_words", acceptword_list);
+        List<String> acceptword_list = new ArrayList<>();//新建一个临时list
+        Collections.addAll(acceptword_list, "114514", "1919810");
+        config.setIfAbsent("accept_words", acceptword_list);//如果config不存在，则将临时list内容导入config
         config.setIfAbsent("EnableLeaveMessage", false);
         config.setIfAbsent("EnableAuditRequests", false);
         config.save();
-        acceptword_list.clear();
-        keyword_list.clear();//删除defaultlist中的所有元素
+        acceptword_list.clear();//clear list
+        keyword_list.clear();//clear list
         onLeaveMsg = config.getBoolean("EnableLeaveMessage");
         onAuditRequests = config.getBoolean("EnableAuditRequests");
         key_list = config.getStringList("key_words");
@@ -45,13 +45,13 @@ public class BotMain extends PluginBase {
 
     public void onEnable() {
         this.getEventListener().subscribeAlways(GroupMessageEvent.class, new GAGroupMessage());
-        if(onLeaveMsg) {
+        if(onLeaveMsg) {//发送群员退群消息开关
             this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GAGroupMemberLeave());
         }
-        if(onLeaveMsg) {
+        if(onAuditRequests) {//自动同意加群请求开关
             this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GAGroupMemberJoinRequests());
         }
-        JCommandManager.getInstance().register(this, new BlockingCommand(
+        JCommandManager.getInstance().register(this, new BlockingCommand( //注册command
                 "gareload", new ArrayList<>(),"重载GroupAdministrator配置文件","/gareload"
         ) {
             @Override

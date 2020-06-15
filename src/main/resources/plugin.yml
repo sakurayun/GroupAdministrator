@@ -1,6 +1,6 @@
 name: "GroupAdministrator"
 author: "ShrBox"
-version: "0.1.3"
+version: "0.1.4"
 main: "top.mc114.groupadmin.BotMain"
-info: "简单的群管插件（alpha）"
+info: "简单的群管插件"
 depends: []
