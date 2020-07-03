@@ -20,7 +20,7 @@ repositories {
 }
 
 val miraiCoreVersion = "+" // 1.0-RC
-val miraiConsoleVersion = "+" // 0.5.1
+val miraiConsoleVersion = "0.5.2" // 0.5.1
 
 dependencies {
     compileOnly(kotlin("stdlib-jdk8"))
