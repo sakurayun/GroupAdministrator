@@ -20,7 +20,7 @@ public class GAGroupMessage implements Consumer <GroupMessageEvent> {
                 event.getBot().recall(event.getMessage());
                 int time = 600;
                 event.getSender().muteAsync(time);
-                return;
+                break;
             }
         }
     }

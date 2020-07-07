@@ -13,7 +13,7 @@ public class GAGroupMemberJoinRequests implements Consumer <MemberJoinRequestEve
         for(int a=0;a<list.size();a++) {
             if (event.getMessage().toLowerCase().contains(list.get(a))) {
                 event.accept();
-                return;
+                break;
             }
         }
     }
