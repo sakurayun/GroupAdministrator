@@ -1,13 +1,9 @@
-package top.mc114.groupadmin;
+package shrbox.github.groupadmin;
 
-import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.events.MemberLeaveEvent;
 import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.message.data.MessageUtils;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.function.Consumer;
 
 public class GAGroupMemberLeave implements Consumer <MemberLeaveEvent> {

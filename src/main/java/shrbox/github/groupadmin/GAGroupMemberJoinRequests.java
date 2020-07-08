@@ -1,17 +1,13 @@
-package top.mc114.groupadmin;
+package shrbox.github.groupadmin;
 
 import net.mamoe.mirai.event.events.MemberJoinRequestEvent;
-
-import java.util.List;
 import java.util.function.Consumer;
 
 public class GAGroupMemberJoinRequests implements Consumer <MemberJoinRequestEvent> {
-    List<String> list;
     @Override
     public void accept(MemberJoinRequestEvent event) {
-        list = BotMain.accept_list;
-        for(int a=0;a<list.size();a++) {
-            if (event.getMessage().toLowerCase().contains(list.get(a))) {
+        for (String s : GAMain.accept_words_list) {
+            if (event.getMessage().toLowerCase().contains(s)) {
                 event.accept();
                 break;
             }
