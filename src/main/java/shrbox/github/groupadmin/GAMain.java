@@ -22,10 +22,6 @@ public class GAMain extends PluginBase {
 
     public static Config config_file;
     public static Config key_words_file;
-    public static List<String> key_words_list;
-    public static List<String> accept_words_list;
-    public static boolean isEnebleLeaveMsg;
-    public static boolean isAuditRequests;
 
     public static void startLoadConfig() {
         config_file = getPlugin().loadConfig("config.yml");//加载config
@@ -46,10 +42,6 @@ public class GAMain extends PluginBase {
 
         temp_accept_words_list.clear();//clear list
         temp_key_words_list.clear();//clear list
-        isEnebleLeaveMsg = config_file.getBoolean("EnableLeaveMessage");
-        isAuditRequests = config_file.getBoolean("EnableAuditRequests");
-        key_words_list = key_words_file.getStringList("key_words");
-        accept_words_list = config_file.getStringList("accept_words");
     }
 
     public void onLoad() {}
@@ -58,10 +50,10 @@ public class GAMain extends PluginBase {
         plugin = this;
         startLoadConfig();
         this.getEventListener().subscribeAlways(GroupMessageEvent.class, new GAGroupMessage());
-        if(isEnebleLeaveMsg) {//发送群员退群消息开关
+        if(config_file.getBoolean("EnableLeaveMessage")) {//发送群员退群消息开关
             this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GAGroupMemberLeave());
         }
-        if(isAuditRequests) {//自动同意加群请求开关
+        if(config_file.getBoolean("EnableAuditRequests")) {//自动同意加群请求开关
             this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GAGroupMemberJoinRequests());
         }
         JCommandManager.getInstance().register(this, new BlockingCommand( //注册command

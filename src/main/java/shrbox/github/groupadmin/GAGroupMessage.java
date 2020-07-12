@@ -10,7 +10,7 @@ public class GAGroupMessage implements Consumer <GroupMessageEvent> {
         if(event.getGroup().getBotPermission().getLevel()==0||event.getSender().getPermission().getLevel()>0) {
             return;
         }
-        for (String s : GAMain.key_words_list) {
+        for (String s : GAMain.key_words_file.getStringList("key_words")) {
             if (event.getMessage().toString().toLowerCase().contains(s)) {
                 event.getBot().recall(event.getMessage());
                 int time = 600;
