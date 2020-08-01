@@ -16,6 +16,7 @@ import java.util.List;
 
 public class GAMain extends PluginBase {
     private static GAMain plugin;
+
     public static GAMain getPlugin() {
         return plugin;
     }
@@ -28,12 +29,18 @@ public class GAMain extends PluginBase {
         key_words_file = getPlugin().loadConfig("key_words.yml");
 
         List<String> temp_key_words_list = new ArrayList<>();//新建一个临时list
-        Collections.addAll(temp_key_words_list,"傻逼","脑瘫","你妈");
+        Collections.addAll(temp_key_words_list, "傻逼", "脑瘫", "你妈");
         key_words_file.setIfAbsent("key_words", temp_key_words_list);//如果config不存在，则将临时list内容导入config
 
         List<String> temp_accept_words_list = new ArrayList<>();//新建一个临时list
+        List<Long> temp_enable_groups = new ArrayList<>();
+        List<Long> temp_accept_requests_groups = new ArrayList<>();
         Collections.addAll(temp_accept_words_list, "114514", "1919810");
+        temp_enable_groups.add(1145141919L);
+        temp_accept_requests_groups.add(191981019L);
         config_file.setIfAbsent("accept_words", temp_accept_words_list);//如果config不存在，则将临时list内容导入config
+        config_file.setIfAbsent("enable_groups", temp_enable_groups);
+        config_file.setIfAbsent("accept_requests_groups", temp_accept_requests_groups);
         config_file.setIfAbsent("EnableLeaveMessage", false);
         config_file.setIfAbsent("EnableAuditRequests", false);
 
@@ -42,22 +49,22 @@ public class GAMain extends PluginBase {
 
         temp_accept_words_list.clear();//clear list
         temp_key_words_list.clear();//clear list
+        temp_enable_groups.clear();
+        temp_accept_requests_groups.clear();
     }
-
-    public void onLoad() {}
 
     public void onEnable() {
         plugin = this;
         startLoadConfig();
         this.getEventListener().subscribeAlways(GroupMessageEvent.class, new GAGroupMessage());
-        if(config_file.getBoolean("EnableLeaveMessage")) {//发送群员退群消息开关
+        if (config_file.getBoolean("EnableLeaveMessage")) {//发送群员退群消息开关
             this.getEventListener().subscribeAlways(MemberLeaveEvent.class, new GAGroupMemberLeave());
         }
-        if(config_file.getBoolean("EnableAuditRequests")) {//自动同意加群请求开关
+        if (config_file.getBoolean("EnableAuditRequests")) {//自动同意加群请求开关
             this.getEventListener().subscribeAlways(MemberJoinRequestEvent.class, new GAGroupMemberJoinRequests());
         }
         JCommandManager.getInstance().register(this, new BlockingCommand( //注册command
-                "gareload", new ArrayList<>(),"重载GroupAdministrator配置文件","/gareload"
+                "gareload", new ArrayList<>(), "重载GroupAdministrator配置文件", "/gareload"
         ) {
             @Override
             public boolean onCommandBlocking(@NotNull CommandSender commandSender, @NotNull List<String> list) {
