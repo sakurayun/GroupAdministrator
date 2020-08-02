@@ -24,3 +24,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: upload file
+      use: actions/upload-artifac@v2
+      with:
+        name: GroupAdministrator-autobuild.jar
+        path: build/libs/GroupAdministrator-0.1.0.jar
