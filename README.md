@@ -1,7 +1,12 @@
 # GroupAdministrator
 
+![Java CI with Gradle](https://github.com/ShrBox/GroupAdministrator/workflows/Java%20CI%20with%20Gradle/badge.svg)  
 简单的mirai机器人群管插件  
 Notice：更新0.1.5版本后`config.yml`中的`key_words`项需要移动至`key_words.yml`
+
+# Download
+
+[Github Actions](https://github.com/ShrBox/GroupAdministrator/actions)
 
 ## Configuration files
 
